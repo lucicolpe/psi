@@ -89,7 +89,6 @@ def workflow_search(request):
         workflow = None
         categories = None
         result = False
-        print(name)
         error = 'No existe workflow con nombre '+ name
         if workflows != []:
             workflow=workflows[0]
