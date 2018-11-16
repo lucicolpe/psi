@@ -26,7 +26,7 @@ SECRET_KEY = 'x@@u*jes_4m-2bk$a0f580kaxu+9*dux2)mu%zmm4938kcv)3i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'mighty-thicket-92796.herokuapp.com',u'127.0.0.1']
+ALLOWED_HOSTS = [u'radiant-river-23997.herokuapp.com',u'127.0.0.1']
 
 # Application definition
 
@@ -69,9 +69,15 @@ TEMPLATES = [
     },
 ]
 
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [STATIC_DIR, ]
-STATIC_ROOT = 'staticfiles'
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR,'static'),
+)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticHeroku')
+
 
 WSGI_APPLICATION = 'workflowrepository.wsgi.application'
 
@@ -115,9 +121,3 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-STATIC_URL = '/static/'

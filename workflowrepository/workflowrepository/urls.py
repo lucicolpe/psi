@@ -16,11 +16,16 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls import include
+from django.conf.urls.static import static
+from django.conf import settings
 
 from data import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^data/', include('data.urls')),
+    url(r'^workflow_list/(?P<category_slug>[-\w]+)/$', views.workflow_list, name='workflow_list_by_category'),
+    url(r'^workflow_detail/(?P<id>\d+)/(?P<slug>[-\w]+)/$', views.workflow_detail, name='workflow_detail'),
     url(r'^admin/', admin.site.urls),
 ]
+urlpatterns += static ( settings.STATIC_URL, \
+                        document_root=settings.STATIC_ROOT)

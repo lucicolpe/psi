@@ -64,6 +64,7 @@ deserunt mollit anim id est laborum."""[init:end]
         self.query7()
         self.query8()
 
+
     #Cree una categoria llamada category 1 en caso de que no exista
     def query1(self):
         name = "category 1"
@@ -132,9 +133,12 @@ deserunt mollit anim id est laborum."""[init:end]
 
     # Realice una consulta que dado el workflow con slug=workflow-1 nos permita obtener la categoria a la que pertenece el workflow.
     def query7(self):
-        w = Workflow.objects.get(slug = "workflow-1")
-        # puede haber varias, asique pongo [0]
-        return w.category.all()[0]
+        try:
+            w = Workflow.objects.get(slug = "workflow-1")
+            # puede haber varias, asique pongo [0]
+            return w.category.all()[0]
+        except ObjectDoesNotExist:
+            return
 
     #Repite la consulta anterior usando el workflow con nombre workflow 10 (el cual no existe).
     def query8(self):
