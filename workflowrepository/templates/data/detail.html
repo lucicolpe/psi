@@ -6,10 +6,11 @@
       <b>Categorias:</b><br>
       {%for category in categories %}
         <ul>
-          <a href="{% url 'find:workflow_list_by_category' category.slug %}">{{category.name}}</a>
+          <a href="{% url 'workflow_list_by_category' category.slug %}">{{category.name}}</a>
         </ul>
       {% endfor %}
-      <b>Descripcion:</b>{{w.description}}
+      <b>KeyWords:</b>{{workflow.keywords}}<br>
+      <b>Description:</b>{{workflow.description|truncatechars:255}}
   {% else %}
     <h1>ERROR</h1>
     <p>{{error}}</p>

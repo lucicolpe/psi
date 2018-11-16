@@ -80,7 +80,7 @@ deserunt mollit anim id est laborum."""[init:end]
 
         for i in range (0, noWorkflows):
             r = random.randint(0,4)
-            w = Workflow.objects.get_or_create(name = workflows[i], client_ip="0.0.0.0", description="description", json = json)[0]
+            w = Workflow.objects.get_or_create(name = workflows[i], client_ip="0.0.0.0", description=self.getParragraph(0+i*10,253+i*10), json = json)[0]
             w.save()
             c = Category.objects.get(name = lista_categories[r])
             w.category.add(c)

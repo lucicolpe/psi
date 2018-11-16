@@ -1,22 +1,23 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <!-- saved from url=(0041)https://radiant-river-23997.herokuapp.com/ -->
 <html>
   <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>Workflows</title>
-      <link href="../../static/css/base.css" rel="stylesheet">
+      <link href="{% static 'css/base.css'%}" rel="stylesheet">
   </head>
 
 
 <body>
     <div id="header">
-        <a href="{% url 'find:index' %}"><img alt="logo" src= "../../static/media/images/logo.png" class="logo"></a>
+        <a href="{% url 'workflow_list' %}"><img alt="logo" src="{% static 'media/images/logo.png' %}" class="logo"></a>
     </div>
     <div id="subheader">
          <div class="search">
-                <form action="{% url 'find:workflow_search' %}" method="post">
+                <form action="{% url 'workflow_search' %}" method="post">
                     {% csrf_token %}
-                      Search Workflow <input type="text" name="search" maxlength="128">
+                      Search Workflow <input type="text" name="key" maxlength="128">
                     <input type="submit" value="byName">
                 </form>
         </div>
@@ -29,11 +30,11 @@
               <h3>Categories</h3>
               <ul>
                   <li class="selected">
-                      <a href="{% url 'find:index' %}">All</a>
+                      <a href="{% url 'workflow_list' %}">All</a>
                   </li>
                   {% for c in list_categories %}
                     <li>
-                        <a href="{% url 'find:workflow_list_by_category' c.slug %}">{{c.name}}</a>
+                        <a href="{% url 'workflow_list_by_category' c.slug %}">{{c.name}}</a>
                     </li>
                   {% endfor %}
               </ul>

@@ -9,8 +9,8 @@
 
   {% for w in workflows %}
     <div class="item"><p>
-      <a href="{% url 'find:workflow_detail' w.id w.slug %}">{{ w.name }}</a>:
-      {{ w.description }}</p>
+      <a href="{% url 'workflow_detail' w.id w.slug %}">{{ w.name }}</a>:
+      {{ w.description|truncatechars:255 }}</p>
     </div>
   {% endfor %}
 

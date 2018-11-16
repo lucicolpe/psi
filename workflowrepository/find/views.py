@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from data.models import Category, Workflow
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.template.defaultfilters import slugify
 
 import json
 # Create your views here.
@@ -38,7 +39,7 @@ def workflow_list(request, category_slug=None):
             error = 'No hay workflows para la categoria ' + category['name']
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(workflows_aux, 7)
+    paginator = Paginator(workflows_aux, 13)
 
     try:
         workflows = paginator.page(page)
@@ -83,21 +84,24 @@ def workflow_detail(request, id, slug):
 
 def workflow_search(request):
     if request.method == 'POST':
-        name=request.POST.get('search')
-        workflows = list(Workflow.objects.filter(name= name))
+        name=str(request.POST.get('key'))
+        workflows = list(Workflow.objects.filter(slug=slugify(name)))
         workflow = None
+        categories = None
         result = False
+        print(name)
         error = 'No existe workflow con nombre '+ name
         if workflows != []:
             workflow=workflows[0]
             result = True
             error = ''
+            categories=list(workflow.category.all())
         list_categories = list(Category.objects.all())
         _dict={
             'list_categories':list_categories,
             'result': result,
             'workflow': workflow,
             'error':error,
-            'categories': list(workflow.category.all()),
+            'categories': categories ,
         }
         return render(request, 'data/detail.html', _dict)
