@@ -10,14 +10,14 @@
 
 <body>
     <div id="header">
-        <a href="https://radiant-river-23997.herokuapp.com/"><img alt="logo" src= "../../static/media/images/logo.png" class="logo"></a>
-        <a href="https://radiant-river-23997.herokuapp.com/help/" class="help">Help</a>
+        <a href="{% url 'find:index' %}"><img alt="logo" src= "../../static/media/images/logo.png" class="logo"></a>
     </div>
     <div id="subheader">
          <div class="search">
-                <form action="https://radiant-river-23997.herokuapp.com/workflow_search/" method="post">
-                      Search Workflow <input type="text" name="key" maxlength="128">
-                    <input type="submit" name="byName" value="by Name">
+                <form action="{% url 'find:workflow_search' %}" method="post">
+                    {% csrf_token %}
+                      Search Workflow <input type="text" name="search" maxlength="128">
+                    <input type="submit" value="byName">
                 </form>
         </div>
     </div>
@@ -29,31 +29,14 @@
               <h3>Categories</h3>
               <ul>
                   <li class="selected">
-                      <a href="https://radiant-river-23997.herokuapp.com/workflow_list/">All</a>
+                      <a href="{% url 'find:index' %}">All</a>
                   </li>
-                  <li>
-                      <a title="tooltip_category1" href="https://radiant-river-23997.herokuapp.com/workflow_list/category1/">category1</a>
-                  </li>
-
-                  <li>
-                      <a title="tooltip_category2" href="https://radiant-river-23997.herokuapp.com/workflow_list/category2/">category2</a>
-                  </li>
-
-                  <li>
-                      <a title="tooltip_category3" href="https://radiant-river-23997.herokuapp.com/workflow_list/category3/">category3</a>
-                  </li>
-
-                  <li>
-                      <a title="tooltip_category4" href="https://radiant-river-23997.herokuapp.com/workflow_list/category4/">category4</a>
-                  </li>
-
-                  <li>
-                      <a title="tooltip_category5" href="https://radiant-river-23997.herokuapp.com/workflow_list/category5/">category5</a>
-                  </li>
-
-
+                  {% for c in list_categories %}
+                    <li>
+                        <a href="{% url 'find:workflow_list_by_category' c.slug %}">{{c.name}}</a>
+                    </li>
+                  {% endfor %}
               </ul>
-              <h3><a href="https://radiant-river-23997.herokuapp.com/add_workflow/"> Upload workflow </a></h3>
           </div>
           {% block content %}{% endblock %}
       </div> <!-- grid -->
@@ -62,9 +45,5 @@
     <div class="footer-frame">
         <p id=footer>Maria Barroso Honrubia y Lucia Colmenarejo Perez 2018</p>
     </div>
-
-
-
-
 
 </body></html>

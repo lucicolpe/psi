@@ -6,9 +6,10 @@
   {% else %}
     <h1>Workflows</h1>
   {% endif %}
+
   {% for w in workflows %}
     <div class="item"><p>
-      <a href="https://radiant-river-23997.herokuapp.com/{{w.id}}/{{w.slug}}">{{ w.name }}</a>:
+      <a href="{% url 'find:workflow_detail' w.id w.slug %}">{{ w.name }}</a>:
       {{ w.description }}</p>
     </div>
   {% endfor %}

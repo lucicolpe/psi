@@ -14,15 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from django.contrib import admin
-from django.conf.urls import include
-from django.conf.urls.static import static
-from django.conf import settings
 
+from find import views
+
+app_name='find'
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'', include('find.urls', namespace='find')),
+    url(r'^$', views.index, name='index'),
+    url(r'^base/', views.base, name='base'),
+    url(r'^workflow_list/(?P<category_slug>[-\w]+)/$', views.workflow_list, name='workflow_list_by_category'),
+    url(r'^workflow_detail/(?P<id>\d+)/(?P<slug>[-\w]+)/$', views.workflow_detail, name='workflow_detail'),
+    url(r'^workflow_search/$', views.workflow_search, name='workflow_search'),
 ]
-urlpatterns += static ( settings.STATIC_URL, \
-                        document_root=settings.STATIC_ROOT)

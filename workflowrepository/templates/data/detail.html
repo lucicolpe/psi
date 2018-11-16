@@ -4,11 +4,11 @@
   {% if workflow %}
     <h1>{{ workflow.name }}</h1>
       <b>Categorias:</b><br>
-      {{for category in workflow.category }}
+      {%for category in categories %}
         <ul>
-          <a href="https://frozen-earth-51137.herokuapp.com/workflow_list/{{category.slug}}/">{{category.name}}</a>
+          <a href="{% url 'find:workflow_list_by_category' category.slug %}">{{category.name}}</a>
         </ul>
-      {{endfor}}
+      {% endfor %}
       <b>Descripcion:</b>{{w.description}}
   {% else %}
     <h1>ERROR</h1>
