@@ -10,7 +10,7 @@
         </ul>
       {% endfor %}
       <b>KeyWords:</b>{{workflow.keywords}}<br>
-      <b>Description:</b>{{workflow.description|truncatechars:255}}
+      <b>Description:</b>{{workflow.description}}
   {% else %}
     <h1>ERROR</h1>
     <p>{{error}}</p>
