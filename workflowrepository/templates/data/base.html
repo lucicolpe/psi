@@ -18,7 +18,7 @@
                 <form action="{% url 'workflow_search' %}" method="post">
                     {% csrf_token %}
                       Search Workflow <input type="text" name="key" maxlength="128">
-                    <input type="submit" value="byName">
+                    <input type="submit" value="by Name" name ="byName">
                 </form>
         </div>
     </div>

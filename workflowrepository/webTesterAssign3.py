@@ -26,7 +26,7 @@ ID_DESCRIPTION = "id_description"
 ID_KEYWORDS = "id_keywords"
 ID_NAME = "id_name"
 ID_VERSION = "id_versionInit"
-SEARCH_TEXTBOX_NAME='search'
+SEARCH_TEXTBOX_NAME='key'
 SEARCH_BUTTOM_NAME='byName'
 
 CHROMEDRIVER= currentdir + "/chromedriver"
