@@ -30,7 +30,7 @@ class Workflow(models.Model):
 	downloads = models.IntegerField(default=0)
 	versionInit = models.CharField(max_length=512)
 	category = models.ManyToManyField(Category, blank=False)
-	client_ip = models.GenericIPAddressField()
+	client_ip = models.GenericIPAddressField(default='192.168.0.1')
 	keywords = models.CharField(max_length=256, default = "")
 	json = models.TextField(max_length=512)
 	created = models.DateField(auto_now=True)

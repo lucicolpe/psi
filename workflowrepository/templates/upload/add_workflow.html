@@ -1,31 +1,52 @@
 
-<h1>Add a WorkFlow</h1>
-<br>
-<div class="pure-g">
-  <div class="pure-u-3-5">
+<!DOCTYPE html>
+{% load staticfiles %}
+<!-- saved from url=(0041)https://radiant-river-23997.herokuapp.com/ -->
+<html>
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Workflows</title>
+      <link href="{% static 'css/base.css'%}" rel="stylesheet">
+  </head>
 
-    <form id="workflow_form" action="https://frozen-earth-51137.herokuapp.com/add_workflow/" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="csrfmiddlewaretoken" value="pxOs4zTZJNMEjV2w0SxthTeps0SMhypzkoA4lb4Ey5YeiUsfLaat9gAyKILUmfL2">
 
-             <table cellpadding="10"><tbody><tr><th><label for="id_name">Name:</label></th><td><input type="text" name="name" id="id_name" required="" maxlength="128"></td></tr>
-        <tr><th><label for="id_category">Category:</label></th><td><select name="category" multiple="multiple" required="" id="id_category">
-        <option value="1">category1</option>
+<body>
+    <div id="header">
+        <a href="{% url 'workflow_list' %}"><img alt="logo" src="{% static 'media/images/logo.png' %}" class="logo"></a>
+    </div>
+    <div id="subheader">
+         <div class="search">
+                <form action="{% url 'workflow_search' %}" method="post">
+                    {% csrf_token %}
+                      Search Workflow <input type="text" name="key" maxlength="128">
+                    <input type="submit" value="by Name" name ="byName">
+                </form>
+        </div>
+    </div>
 
-        <option value="2">category2</option>
-
-        <option value="3">category3</option>
-
-        <option value="4">category4</option>
-
-        <option value="5">category5</option>
-
-        </select></td></tr>
-        <tr><th><label for="id_keywords">Keywords:</label></th><td><input type="text" name="keywords" id="id_keywords" required="" maxlength="256"></td></tr>
-        <tr><th><label for="id_description">Description:</label></th><td><textarea name="description" rows="10" cols="40" required="" id="id_description" maxlength="512"></textarea></td></tr>
-        <tr><th><label for="id_versionInit">Version:</label></th><td><input type="text" name="versionInit" id="id_versionInit" required="" maxlength="128"></td></tr>
-        <tr><th><label for="id_json">Workflow File:</label></th><td><input type="file" name="json" required="" id="id_json"></td></tr></tbody></table><br>
-
+    <div id="content">
+      <h1>Add a WorkFlow</h1>
+      <br>
+      <div class="pure-g">
+        <div class="pure-u-3-5">
+          {% if msg%}
+            {{ msg }}
+          {% else%}
+          <form id="workflow_form" method="post" action="." enctype="multipart/form-data">
+            {% csrf_token %}
+            {%for hidden in form.hidden_fields%}
+              {{hidden}}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+              {{field.errors}}
+              {{field.help_text}}
+              {{field}}
+              <br><br>
+            {% endfor%}
             <input type="submit" name="submit_workflow" value="CreateWorkflow">
-    </form>
-  </div>
-</div>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+</body>
