@@ -9,6 +9,10 @@ def add_workflow(request):
 
         # Have we been provided with a valid form
         if form.is_valid():
+
+            workflowFile = form.cleaned_data['json']
+            file_data = workflowFile.read().decode('utf-8')
+            form.instance.json = file_data
 			# Save the new category to the database
             form.save(commit=True)
 			# Now that the category is saved

@@ -10,7 +10,13 @@
         </ul>
       {% endfor %}
       <b>KeyWords:</b>{{workflow.keywords}}<br>
-      <b>Description:</b>{{workflow.description}}
+      <b>Description:</b>{{workflow.description}}<br>
+      <b>Json:</b>{{workflow.json}}
+
+      <form id="workflow_download" method="post" action="{% url 'workflow_download' workflow.id workflow.slug %}" enctype="multipart/form-data">
+        {% csrf_token %}
+         <input value="Download" type="submit">
+      </form>
   {% else %}
     <h1>ERROR</h1>
     <p>{{error}}</p>

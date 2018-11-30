@@ -8,4 +8,4 @@ python manage.py migrate
 
 python manage.py createsuperuser
 
-#python populate.py
+python manage populate

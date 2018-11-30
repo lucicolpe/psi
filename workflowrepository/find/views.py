@@ -104,3 +104,15 @@ def workflow_search(request):
             'categories': categories ,
         }
         return render(request, 'data/detail.html', _dict)
+
+def workflow_download (request,id,slug,count = True) :
+
+    workflow = list(Workflow.objects.filter(id = id))[0]
+    workflow.downloads +=1
+    workflow.views +=1
+    workflow.save()
+
+    response = HttpResponse ( workflow.json ,content_type="application/octet−stream")
+    fileName = workflow.slug + '_file'
+    response['Content-Disposition'] = 'inline; filename= %s'  %fileName
+    return  response
