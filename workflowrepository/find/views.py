@@ -2,13 +2,21 @@
 
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from data.models import Category, Workflow
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.defaultfilters import slugify
 
 import json
+
+import urllib
+import urllib2
+
+from django.conf import settings
+from django.contrib import messages
+
+
 # Create your views here.
 
 def index(request):
@@ -72,9 +80,7 @@ def workflow_detail(request, id, slug):
         result = True
         error = ''
 
-    list_categories = list(Category.objects.all())
     _dict={
-        'list_categories':list_categories,
         'result': result,
         'workflow': workflow,
         'categories': list(workflow.category.all()),
@@ -95,9 +101,7 @@ def workflow_search(request):
             result = True
             error = ''
             categories=list(workflow.category.all())
-        list_categories = list(Category.objects.all())
         _dict={
-            'list_categories':list_categories,
             'result': result,
             'workflow': workflow,
             'error':error,
@@ -107,6 +111,33 @@ def workflow_search(request):
 
 def workflow_download (request,id,slug,count = True) :
 
+    ''' Begin reCAPTCHA validation '''
+    recaptcha_response = request.POST.get('g-recaptcha-response')
+    url = 'https://www.google.com/recaptcha/api/siteverify'
+    values = {
+        'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+        'response': recaptcha_response
+    }
+    data = urllib.urlencode(values)
+    req = urllib2.Request(url, data)
+    response = urllib2.urlopen(req)
+    result = json.load(response)
+    ''' End reCAPTCHA validation '''
+
+    if result['success']:
+        messages.success(request, 'New comment added with success!')
+    else:
+        messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+        workflow=list(Workflow.objects.filter(id = id, slug=slug))[0]
+        _dict={
+            'workflow' : workflow,
+            'categories': list(workflow.category.all()),
+            'result': False,
+            'error': 'Invalid reCAPTCHA. Please try again.'
+        }
+        return render(request, 'data/detail.html', _dict)
+
+
     workflow = list(Workflow.objects.filter(id = id))[0]
     workflow.downloads +=1
     workflow.views +=1
@@ -115,4 +146,11 @@ def workflow_download (request,id,slug,count = True) :
     response = HttpResponse ( workflow.json ,content_type="application/octet−stream")
     fileName = workflow.slug + '_file'
     response['Content-Disposition'] = 'inline; filename= %s'  %fileName
-    return  response
+    return response
+
+
+def workflow_download_json(request, id, slug):
+    # SEARCH FOR THE WORKFLOW
+    workflow = list(Workflow.objects.filter(id = id))[0]
+    # with  workflow . id = id
+    return HttpResponse(workflow.json ,content_type="application/octet-stream")

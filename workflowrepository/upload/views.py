@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from data.models import Workflow
-from upload.forms import WorkflowForm
+from upload.forms import WorkFlowFormBase
 # Create your views here.
 def add_workflow(request):
-    form = WorkflowForm()
+    form = WorkFlowFormBase()
     if request.method == 'POST':
-        form = WorkflowForm(request.POST, request.FILES)
+        form = WorkFlowFormBase(request.POST, request.FILES)
 
         # Have we been provided with a valid form
         if form.is_valid():

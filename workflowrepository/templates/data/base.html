@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+
+{% block script %}{% endblock %}
 <!-- saved from url=(0041)https://radiant-river-23997.herokuapp.com/ -->
 <html>
   <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>Workflows</title>
       <link href="{% static 'css/base.css'%}" rel="stylesheet">
+      <link href="{% static 'css/pure-min.css'%}" rel="stylesheet">
   </head>
 
 
@@ -25,21 +28,7 @@
 
     <div id="content">
 
-      <div class="pure-g" xmlns:find="http://www.w3.org/1999/xhtml">
-         <div id="sidebar" class="pure-u-1-5">
-              <h3>Categories</h3>
-              <ul>
-                  <li class="selected">
-                      <a href="{% url 'workflow_list' %}">All</a>
-                  </li>
-                  {% for c in list_categories %}
-                    <li>
-                        <a href="{% url 'workflow_list_by_category' c.slug %}">{{c.name}}</a>
-                    </li>
-                  {% endfor %}
-              </ul>
-              <h3><a href="{% url 'add_workflow' %}">Upload Workflow</a></h3>
-          </div>
+      <div class="pure-g">
           {% block content %}{% endblock %}
       </div> <!-- grid -->
     </div>

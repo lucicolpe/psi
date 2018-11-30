@@ -1,7 +1,7 @@
 from django import forms
 from data.models import Workflow, Category
 
-class WorkflowForm(forms.ModelForm):
+class WorkFlowFormBase(forms.ModelForm):
     #name,category, keywords, description y versionInit
     name = forms.CharField(max_length=128,help_text="Please enter the workflow name.")
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), required=False)
