@@ -47,7 +47,7 @@ def workflow_list(request, category_slug=None):
             error = 'No hay workflows para la categoria ' + category['name']
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(workflows_aux, 20)
+    paginator = Paginator(workflows_aux, 14)
 
     try:
         workflows = paginator.page(page)
